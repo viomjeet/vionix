@@ -104,8 +104,19 @@ app.use('/api/users', createUserRouter(userController));
 app.use(errorHandler);
 
 // Start server
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`Backend server running on http://localhost:${port}`);
+  try {
+    const userCount = await prisma.user.count();
+    if (userCount === 0) {
+      console.log('Database is empty. Automatically seeding demo creators and posts...');
+      const { seedDatabase } = await import('./seed.js');
+      await seedDatabase(prisma);
+      console.log('Auto-seed completed successfully!');
+    }
+  } catch (err) {
+    console.error('Auto-seed check error:', err);
+  }
 });
 
 export { app, prisma };
