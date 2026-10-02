@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "seed": "tsx src/seed.ts",
-    "build": "prisma generate && prisma db push --accept-data-loss && tsc",
+    "build": "node setup-env.js && prisma generate && prisma db push --accept-data-loss && tsc",
     "start": "node dist/server.js"
   },
   "dependencies": {

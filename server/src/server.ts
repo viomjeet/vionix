@@ -30,6 +30,10 @@ import { errorHandler } from './middlewares/error.middleware.js';
 
 dotenv.config();
 
+if (!process.env.DATABASE_URL) {
+  process.env.DATABASE_URL = 'file:./dev.db';
+}
+
 const app = express();
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
 
